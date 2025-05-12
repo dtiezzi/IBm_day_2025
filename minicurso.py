@@ -2,7 +2,7 @@ import pandas as pd
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay, classification_report
-from sklearn.model_selection import RandomizedSearchCV, train_test_split
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV, train_test_split
 from scipy.stats import randint
 
 import matplotlib.pyplot as plt
@@ -34,9 +34,11 @@ ConfusionMatrixDisplay(confusion_matrix=cm).plot()
 
 ### Ajuste de  hiperparametros
 
-param_dist = {'n_estimators': randint(50,500),
+
+param_dist = {'n_estimators': randint(20,100),
               'max_depth': randint(1,20)}
 
+print(param_dist['n_estimators'].rvs())
 
 # Busca aleatória para testar os parâmetros
 rand_search = RandomizedSearchCV(rf, 
@@ -44,7 +46,8 @@ rand_search = RandomizedSearchCV(rf,
                                  n_iter=5, 
                                  cv=5)
 
-# Trina o modelo
+
+# Treina o modelo
 rand_search.fit(X_train, y_train)
 
 # Variável para o melhor modelo
@@ -52,6 +55,23 @@ best_rf = rand_search.best_estimator_
 
 # Melhores hiperparametros
 print('Best hyperparameters:',  rand_search.best_params_)
+
+### Para Grid Search - muito demorado para rodar !!!!! Melhor não rodar ###
+
+# param_dist = {'n_estimators': [i for i in range(20,100)],
+#               'max_depth': [i for i in range(1,20)]}
+
+# gsearch = GridSearchCV(rf, param_grid=param_dist)
+
+# # Treina o modelo
+# gsearch.fit(X_train, y_train)
+
+# # Variável para o melhor modelo
+# best_rf = gsearch.best_estimator_
+
+# # Melhores hiperparametros
+# print('Best hyperparameters:',  gsearch.best_params_)
+
 
 # Predição do melhor modelo
 y_pred = best_rf.predict(X_test)
