@@ -41,6 +41,5 @@ Para utilizar o Google Colab tente converter o arquivo .py
 
 ```shell
 pip install colab-convert
-import colab-convert
 colab-convert minicurso.py minicurso.ipynb
 ```
