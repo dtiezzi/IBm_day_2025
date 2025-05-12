@@ -37,4 +37,10 @@ git clone https://github.com/dtiezzi/IBm_day_2025.git
 cd IBm_day_2025
 ```
 
+Para utilizar o Google Colab tente converter o arquivo .py
 
+```shell
+pip install colab-convert
+import colab-convert
+colab-convert minicurso.py minicurso.ipynb
+```
